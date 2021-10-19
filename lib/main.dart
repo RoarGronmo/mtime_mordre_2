@@ -16,7 +16,6 @@ const List<String> scopes = ['openid', 'profile', 'offline_access'];
 
 
 void main()  {
-
   runApp(const MyApp());
 }
 
@@ -45,6 +44,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+
+
 class _MyHomePageState extends State<MyHomePage> {
   String? accessToken;
 
@@ -54,9 +55,15 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
 
+    bool? isLoggedIn()  {
+      return  AuthManager.instance?.isLoggedIn();
+    }
+    bool?  ila = isLoggedIn();
 
     return Scaffold(
       appBar: AppBar(
@@ -66,22 +73,30 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           ListTile(
             title: Text(
-              'AzureAD OAuth',
+              'Mordre/Mtime',
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.launch),
-            title: const Text('Login'),
-            onTap: () {
-              login();
-            },
-          ),
+          if(ila == false)
+            ListTile(
+              leading: const Icon(Icons.launch),
+              title:  Text('Login ' + ila.toString()),
+              onTap: () {
+                login();
+              },
+            ),
           ListTile(
             leading: const Icon(Icons.launch),
             title: const Text('\Who is logged in?'),
             onTap: () {
               showLoginInfo().then((value) => showMessage(value));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.launch),
+            title: const Text('Logg ut'),
+            onTap: () {
+              logout();
             },
           ),
 
@@ -114,9 +129,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
+
+
   void login() async {
    AuthManager.instance?.Login();
   }
+
+  void logout() async {
+    await AuthManager.instance?.logout();
+  }
+
+
 
 
 }

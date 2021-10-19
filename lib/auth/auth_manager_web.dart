@@ -86,12 +86,18 @@ class Auth0ManagerForWeb extends AuthManager {
 
   @override
   Future<void> logout() async {
-    //stuff that uses dart:js
+    pca.logoutRedirect();
   }
 
   @override
   Future<String> getActiveAccount() async {
     return _account!.username;
+  }
+
+  bool isLoggedIn()  {
+    print("ISLOGGED IN");
+    print(_account?.username);
+    return _account?.username != null ? true : false;
   }
 
 }

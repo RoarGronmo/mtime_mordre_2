@@ -14,4 +14,5 @@ abstract class AuthManager {
   Future<void> Login();
   Future<dynamic> getActiveAccount();
   Future<void> logout();
+  bool isLoggedIn();
 }

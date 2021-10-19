@@ -25,6 +25,7 @@ class Auth0Manager extends AuthManager {
       await oauth.login();
 
       accessToken = await oauth.getAccessToken();
+
       print('Popup login successful. name: ${accessToken}');
     } catch (e) {
       print('Erroro');
@@ -32,13 +33,20 @@ class Auth0Manager extends AuthManager {
     }
   }
 
+  bool isLoggedIn() {
+    print(accessToken);
+    print("HELLO from isloggedin");
+    return accessToken != null ? true : false;
+  }
+
   @override
   Future<void> logout() async {
-    //stuff that uses classic dart.io
+    await oauth.logout();
+    print(accessToken);
   }
 
   @override
   Future<String> getActiveAccount() async {
-    return "Not implemented";
+    return "Mitt navn må hentast frå accessToken. Metode altså ikkje fullstendig implementert her.";
   }
 }
