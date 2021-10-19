@@ -22,15 +22,14 @@ void main()  {
 
 
 class MyApp extends StatelessWidget {
-
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AAD Oauth Flutter',
+      title: 'Mordre/Mtime',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(title: 'AAD OAuth Home'),
+      home: const MyHomePage(title: 'Home'),
     );
   }
 }
@@ -78,20 +77,18 @@ class _MyHomePageState extends State<MyHomePage> {
               login();
             },
           ),
-
-
-
-
-
+          ListTile(
+            leading: const Icon(Icons.launch),
+            title: const Text('\Who is logged in?'),
+            onTap: () {
+              showLoginInfo().then((value) => showMessage(value));
+            },
+          ),
 
         ],
       ),
     );
   }
-
-
-
-
 
   void showError(dynamic ex) {
     showMessage(ex.toString());
@@ -111,7 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(context: context, builder: (BuildContext context) => alert);
   }
 
-
+  Future<String> showLoginInfo() async {
+    return await AuthManager.instance?.getActiveAccount();
+  }
 
 
 

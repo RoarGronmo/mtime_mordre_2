@@ -32,7 +32,6 @@ class Auth0Manager extends AuthManager {
     }
   }
 
-
   @override
   Future<void> logout() async {
     //stuff that uses classic dart.io
@@ -40,6 +39,6 @@ class Auth0Manager extends AuthManager {
 
   @override
   Future<String> getActiveAccount() async {
-    throw UnsupportedError('Cannot create an auth manager');
+    return "Not implemented";
   }
 }
