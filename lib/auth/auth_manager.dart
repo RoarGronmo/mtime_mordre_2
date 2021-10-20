@@ -1,13 +1,11 @@
-
 import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
 import 'iAuth_manager.dart';
-//other imports
 
 AuthManager getManager() => Auth0Manager();
+
 class Auth0Manager extends AuthManager {
   String? accessToken;
-
 
   static final Config config = Config(
       tenant: '294c7ede-2387-42ab-bbff-e5eb67ca3aee',

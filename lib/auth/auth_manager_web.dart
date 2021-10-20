@@ -1,25 +1,19 @@
 import 'package:msal_js/msal_js.dart';
-
-import 'auth_manager.dart';
-import 'dart:js' as js;
-
 import 'iAuth_manager.dart';
-//other imports
+
 AuthManager getManager() => Auth0ManagerForWeb();
 
 class Auth0ManagerForWeb extends AuthManager {
-
-  // **Setup your directory settings here**:
   static const String clientId = 'bbe45ebc-fb38-48d8-8abd-9c5a9d38a6fd';
   static const List<String> scopes = ['openid', 'profile', 'offline_access'];
   AccountInfo? _account;
+
   static final PublicClientApplication pca = init();
 
   static init(){
     return  PublicClientApplication(
       Configuration()
         ..auth = (BrowserAuthOptions()
-        // Give MSAL our client ID
           ..clientId = clientId
           ..authority = 'https://login.microsoftonline.com/294c7ede-2387-42ab-bbff-e5eb67ca3aee')
 
@@ -29,7 +23,6 @@ class Auth0ManagerForWeb extends AuthManager {
               if (containsPii) {
                 return;
               }
-
               // MSAL log message
               print('MSAL: [$level] $message');
             }

@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'Services/ApiService_fake.dart';
 import 'auth/iAuth_manager.dart';
-
-
-
 
 class Mordre_Mtime extends StatelessWidget {
   const Mordre_Mtime({Key? key}) : super(key: key);
@@ -21,28 +17,20 @@ class Mordre_Mtime extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-
-
   const HomePage({Key? key, required this.title, }) : super(key: key);
-
   final String title;
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-
-
 class _HomePageState extends State<HomePage> {
   String? accessToken;
-
 
   @override
   void initState() {
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +74,6 @@ class _HomePageState extends State<HomePage> {
               logout();
             },
           ),
-
         ],
       ),
     );
@@ -114,14 +101,9 @@ class _HomePageState extends State<HomePage> {
     return await AuthManager.instance?.getActiveAccount();
   }
 
-
-
-
-
   void login() async {
     AuthManager.instance?.Login();
     String sid = new ApiServiceFake().loginSession() as String;
-
   }
 
   void logout() async {
