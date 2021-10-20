@@ -6,7 +6,8 @@ AuthManager getManager() => Auth0ManagerForWeb();
 class Auth0ManagerForWeb extends AuthManager {
   static const String clientId = 'bbe45ebc-fb38-48d8-8abd-9c5a9d38a6fd';
   static const List<String> scopes = ['openid', 'profile', 'offline_access'];
-  AccountInfo? _account;
+  static AccountInfo? _account;
+  static String? _accessToken;
 
   static final PublicClientApplication pca = init();
 
@@ -32,11 +33,10 @@ class Auth0ManagerForWeb extends AuthManager {
   }
 
   @override
-  Future<AccountInfo?> Login() async {
+  Future<String> Login() async {
 
     /// Starts a popup login.
     print("Starting login from Web-client");
-
     try {
       // Handle redirect flow
       final AuthenticationResult? redirectResult =
@@ -50,7 +50,6 @@ class Auth0ManagerForWeb extends AuthManager {
         pca.setActiveAccount(redirectResult.account);
       } else {
         // Normal page load (not from an auth redirect)
-
         // Check if an account is logged in
         final List<AccountInfo> accounts = pca.getAllAccounts();
 
@@ -65,15 +64,15 @@ class Auth0ManagerForWeb extends AuthManager {
     }
     try {
       final response = await pca.loginPopup(PopupRequest()..scopes = scopes);
-
-
       _account = response.account;
 
       print('Popup login successful. name: ${_account!.name}');
+      return response.accessToken;
     } on AuthException catch (ex) {
       print('MSAL: ${ex.errorCode}:${ex.errorMessage}');
+      return "Empty";
     }
-    return _account;
+
   }
 
 
@@ -86,6 +85,7 @@ class Auth0ManagerForWeb extends AuthManager {
   Future<String> getActiveAccount() async {
     return _account!.username;
   }
+
 
   bool isLoggedIn()  {
     print("ISLOGGED IN");

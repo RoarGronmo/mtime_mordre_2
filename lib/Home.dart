@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mtime_mordre/Services/ApiService.dart';
@@ -129,23 +131,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   void login() async {
-    AuthManager.instance?.Login();
-    new ApiServiceFake().loginSession().then((value) => {
-      setState(() {
-        sessionId = value;
+    AuthManager.instance?.Login().then((token) => {
+      new ApiServiceMordre().loginSession(token).then((sid) => {
+        print("SID below: "),
+        print(sid),
+        setState(() {
+          sessionId = sid;
+        })
       })
     });
   }
 
   fetchR1s(){
     new ApiServiceMordre().listR1s(sessionId!).then((value) => {
-
         setState(() {
-        var list = value['payload'];
-        var flattenedList = [];
-        list.forEach((k, v) => flattenedList.add(v));
-        departments =
-        flattenedList.map((model) => MordreBil.fromJson(model)).toList();
+          var list = value['payload'];
+          var flattenedList = [];
+          list.forEach((k, v) => flattenedList.add(v));
+          departments =
+          flattenedList.map((model) => MordreBil.fromJson(model)).toList();
         })
     });
   }

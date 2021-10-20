@@ -2,7 +2,7 @@ import 'iApiService.dart';
 
 class ApiServiceFake extends ApiService {
   @override
-  Future<String> loginSession() async {
+  Future<String> loginSession(String oauth_token) async {
     return "80c9113a-8c4f-440a-a2ae-409166b652f2";
   }
 

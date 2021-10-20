@@ -5,7 +5,7 @@ import 'iAuth_manager.dart';
 AuthManager getManager() => Auth0Manager();
 
 class Auth0Manager extends AuthManager {
-  String? accessToken;
+  static String? _accessToken;
 
   static final Config config = Config(
       tenant: '294c7ede-2387-42ab-bbff-e5eb67ca3aee',
@@ -15,16 +15,13 @@ class Auth0Manager extends AuthManager {
   final AadOAuth oauth = AadOAuth(config);
 
   @override
-  Future<void> Login() async {
-
+  Future<String> Login() async {
     try {
       print("Starting login from Native client");
-      //WebView.platform = WebView();
       await oauth.login();
-
-      accessToken = await oauth.getAccessToken();
-
-      print('Popup login successful. name: ${accessToken}');
+      _accessToken = await oauth.getAccessToken();
+      print('Popup login successful. token: ${_accessToken}');
+      return _accessToken.toString();
     } catch (e) {
       print('Erroro');
       throw Error();
@@ -32,15 +29,16 @@ class Auth0Manager extends AuthManager {
   }
 
   bool isLoggedIn() {
-    print(accessToken);
+    print(_accessToken);
     print("HELLO from isloggedin");
-    return accessToken != null ? true : false;
+    return _accessToken != null ? true : false;
   }
+
 
   @override
   Future<void> logout() async {
     await oauth.logout();
-    print(accessToken);
+    print(_accessToken);
   }
 
   @override

@@ -10,7 +10,7 @@ abstract class AuthManager {
     return _instance;
   }
 
-  Future<void> Login();
+  Future<String> Login();
   Future<dynamic> getActiveAccount();
   Future<void> logout();
   bool isLoggedIn();

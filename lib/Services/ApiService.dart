@@ -5,8 +5,24 @@ import 'package:http/http.dart' as http;
 class ApiServiceMordre extends ApiService {
 
   @override
-  Future<String> loginSession() async {
-    return "Not impplementedf";
+  Future<String> loginSession(oauth_token) async {
+    String api_uri = "https://api.norva24.no/app/dev/8/Service/execute.aspx";
+    String method = "logInSession";
+    String moduleName = "Authentication";
+    try {
+      final response = await http.post(
+        Uri.parse(api_uri),
+        body: json.encode({
+          'method': method,
+          'moduleName': moduleName,
+          'payload': {'oauth2AccessToken' : oauth_token}
+        }),
+      );
+      return jsonDecode(response.body)['payload']['session']['id'];
+    } catch (err) {
+      print(err.toString());
+      return "";
+    }
   }
 
   @override
