@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mtime_mordre/Services/ApiService.dart';
 import 'Services/ApiService_fake.dart';
 import 'auth/iAuth_manager.dart';
+import 'models/Bil.dart';
 
 class Mordre_Mtime extends StatelessWidget {
   const Mordre_Mtime({Key? key}) : super(key: key);
@@ -26,6 +28,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String? accessToken;
+  String? sessionId;
+  dynamic departments;
 
   @override
   void initState() {
@@ -35,10 +39,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
-    bool? isLoggedIn()  {
-      return  AuthManager.instance?.isLoggedIn();
-    }
-    bool?  ila = isLoggedIn();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -52,10 +53,9 @@ class _HomePageState extends State<HomePage> {
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
-          if(ila == false)
             ListTile(
               leading: const Icon(Icons.launch),
-              title:  Text('Login ' + ila.toString()),
+              title:  Text('Login '),
               onTap: () {
                 login();
               },
@@ -67,6 +67,14 @@ class _HomePageState extends State<HomePage> {
               showLoginInfo().then((value) => showMessage(value));
             },
           ),
+          if(sessionId != null)
+            ListTile(
+              leading: const Icon(Icons.launch),
+              title: const Text('Check session'),
+              onTap: () {
+                showMessage(sessionId!);
+              },
+            ),
           ListTile(
             leading: const Icon(Icons.launch),
             title: const Text('Logg ut'),
@@ -74,6 +82,25 @@ class _HomePageState extends State<HomePage> {
               logout();
             },
           ),
+          if(sessionId != null)
+            ListTile(
+              leading: const Icon(Icons.launch),
+              title: const Text('Hent biler fra API'),
+              onTap: () {
+                fetchR1s();
+              },
+            ),
+          if(departments != null)
+            Expanded(
+                child : SizedBox(
+                    height: 400.0,
+                    child: ListView.builder(
+                        itemCount: departments.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(title: Text(departments[index].nm));
+                        }
+                    )
+                )),
         ],
       ),
     );
@@ -103,14 +130,27 @@ class _HomePageState extends State<HomePage> {
 
   void login() async {
     AuthManager.instance?.Login();
-    String sid = new ApiServiceFake().loginSession() as String;
+    new ApiServiceFake().loginSession().then((value) => {
+      setState(() {
+        sessionId = value;
+      })
+    });
+  }
+
+  fetchR1s(){
+    new ApiServiceMordre().listR1s(sessionId!).then((value) => {
+
+        setState(() {
+        var list = value['payload'];
+        var flattenedList = [];
+        list.forEach((k, v) => flattenedList.add(v));
+        departments =
+        flattenedList.map((model) => MordreBil.fromJson(model)).toList();
+        })
+    });
   }
 
   void logout() async {
     await AuthManager.instance?.logout();
   }
-
-
-
-
 }

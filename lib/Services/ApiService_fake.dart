@@ -2,12 +2,13 @@ import 'iApiService.dart';
 
 class ApiServiceFake extends ApiService {
   @override
-  Future<dynamic> loginSession() async {
+  Future<String> loginSession() async {
     return "80c9113a-8c4f-440a-a2ae-409166b652f2";
   }
 
   @override
-  Future<dynamic> listR1s(int value) async {
+  Future<dynamic> listR1s(String sid) async {
+
     return {
       "statusId": 1,
       "debug": null,
