@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mtime_mordre/Services/ApiService.dart';
+import 'package:mtime_mordre/snackbar.dart';
 import 'Services/ApiService_fake.dart';
 import 'auth/iAuth_manager.dart';
 import 'models/Bil.dart';
@@ -144,6 +145,7 @@ class _HomePageState extends State<HomePage> {
 
   fetchR1s(){
     new ApiServiceMordre().listR1s(sessionId!).then((value) => {
+      Snackbar.buildSuccessSnackbar(context, "Success!"),
         setState(() {
           var list = value['payload'];
           var flattenedList = [];
@@ -151,6 +153,9 @@ class _HomePageState extends State<HomePage> {
           departments =
           flattenedList.map((model) => MordreBil.fromJson(model)).toList();
         })
+
+    }).onError((error, stackTrace) => {
+      Snackbar.buildErrorSnackbar(context, "Kunne ikke hente biler. Details: " + error.toString() )
     });
   }
 

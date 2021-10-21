@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:mtime_mordre/snackbar.dart';
+
 import 'iApiService.dart';
 import 'package:http/http.dart' as http;
 import '../config.dart' as Config;
@@ -9,7 +11,6 @@ class ApiServiceMordre extends ApiService {
     String api_uri = Config.endpoint_mordre;
     String method = "logInSession";
     String moduleName = "Authentication";
-    try {
       final response = await http.post(
         Uri.parse(api_uri),
         body: json.encode({
@@ -18,20 +19,18 @@ class ApiServiceMordre extends ApiService {
           'payload': {'oauth2AccessToken' : oauth_token}
         }),
       );
+      if(jsonDecode(response.body)['statusId'] != 1){
+        throw Exception(jsonDecode(response.body)['statusText']);
+      }
       return jsonDecode(response.body)['payload']['session']['id'];
-    } catch (err) {
-      print(err.toString());
-      return "";
     }
-  }
 
   @override
   Future<dynamic> listR1s(String sid) async {
     String api_uri = Config.endpoint_mordre;
     String method = "listR1s";
     String moduleName = "MOrdre";
-    try {
-      final response = await http.post(
+    final response = await http.post(
         Uri.parse(api_uri),
         body: json.encode({
           'method': method,
@@ -40,9 +39,10 @@ class ApiServiceMordre extends ApiService {
           'payload': null
         }),
       );
-      return jsonDecode(response.body);
-    } catch (err) {
-      print(err.toString());
-    }
+      var res =jsonDecode(response.body);
+      if(res['statusId'] != 1){
+        throw Exception(res['statusText']);
+      }
+      return res;
   }
 }
