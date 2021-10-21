@@ -140,7 +140,9 @@ class _HomePageState extends State<HomePage> {
           sessionId = sid;
         })
       })
-    });
+    }).onError((error, stackTrace) => {
+      Snackbar.buildErrorSnackbar(context, "Feil ved innlogging. Details: " + error.toString() )
+    });;
   }
 
   fetchR1s(){
