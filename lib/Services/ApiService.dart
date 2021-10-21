@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'iApiService.dart';
 import 'package:http/http.dart' as http;
-
+import '../config.dart' as Config;
 class ApiServiceMordre extends ApiService {
 
   @override
   Future<String> loginSession(oauth_token) async {
-    String api_uri = "https://api.norva24.no/app/dev/8/Service/execute.aspx";
+    String api_uri = Config.endpoint_mordre;
     String method = "logInSession";
     String moduleName = "Authentication";
     try {
@@ -27,7 +27,7 @@ class ApiServiceMordre extends ApiService {
 
   @override
   Future<dynamic> listR1s(String sid) async {
-    String api_uri = "https://api.norva24.no/app/dev/8/Service/execute.aspx";
+    String api_uri = Config.endpoint_mordre;
     String method = "listR1s";
     String moduleName = "MOrdre";
     try {
