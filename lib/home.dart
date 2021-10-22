@@ -1,12 +1,8 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/Services/ApiService.dart';
 import 'package:mtime_mordre/snackbar.dart';
-import 'Services/ApiService_fake.dart';
 import 'auth/iAuth_manager.dart';
-import 'models/Bil.dart';
 import 'mordre.dart';
 
 class Mordre_Mtime extends StatelessWidget {
@@ -41,11 +37,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Mordre(
       androidDrawer: _AndroidDrawer(),
     );
-
   }
 }
 
