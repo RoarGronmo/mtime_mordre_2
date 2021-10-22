@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:msal_js/msal_js.dart';
 import 'iAuth_manager.dart';
 
@@ -8,6 +9,7 @@ class Auth0ManagerForWeb extends AuthManager {
   static const List<String> scopes = ['openid', 'profile', 'offline_access'];
   static AccountInfo? _account;
   static String? _accessToken;
+  static String? sessionId;
 
   static final PublicClientApplication pca = init();
 
@@ -33,7 +35,7 @@ class Auth0ManagerForWeb extends AuthManager {
   }
 
   @override
-  Future<String> Login() async {
+  Future<String> Login(BuildContext context) async {
 
     /// Starts a popup login.
     print("Starting login from Web-client");
@@ -79,6 +81,16 @@ class Auth0ManagerForWeb extends AuthManager {
   @override
   Future<void> logout() async {
     pca.logoutRedirect();
+  }
+
+  @override
+  Future<String?> getSession() async{
+    return sessionId;
+  }
+
+  @override
+  void onChange(){
+    notifyListeners();
   }
 
   @override

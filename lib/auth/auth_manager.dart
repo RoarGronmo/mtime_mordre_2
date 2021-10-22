@@ -1,11 +1,14 @@
 import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
+import 'package:mtime_mordre/Services/ApiService.dart';
+import '../snackbar.dart';
 import 'iAuth_manager.dart';
 
 AuthManager getManager() => Auth0Manager();
 
 class Auth0Manager extends AuthManager {
   static String? _accessToken;
+  static String? sessionId;
 
   static final Config config = Config(
       tenant: '294c7ede-2387-42ab-bbff-e5eb67ca3aee',
@@ -15,11 +18,20 @@ class Auth0Manager extends AuthManager {
   final AadOAuth oauth = AadOAuth(config);
 
   @override
-  Future<String> Login() async {
+  Future<String> Login(context) async {
     try {
       print("Starting login from Native client");
       await oauth.login();
       _accessToken = await oauth.getAccessToken();
+
+      new ApiServiceMordre().loginSession(_accessToken!).then((sid) => {
+        sessionId = sid,
+      }).onError((error, stackTrace) =>
+      {
+        Snackbar.buildErrorSnackbar(
+            context, "Feil ved innlogging. Details: " + error.toString())
+      });
+
       print('Popup login successful. token: ${_accessToken}');
       return _accessToken.toString();
     } catch (e) {
@@ -27,10 +39,13 @@ class Auth0Manager extends AuthManager {
       throw Error();
     }
   }
+  @override
+  Future<String?> getSession() async{
+    return sessionId;
+  }
+
 
   bool isLoggedIn() {
-    print(_accessToken);
-    print("HELLO from isloggedin");
     return _accessToken != null ? true : false;
   }
 

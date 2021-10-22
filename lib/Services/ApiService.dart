@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:mtime_mordre/snackbar.dart';
+import 'package:mtime_mordre/auth/auth_manager.dart';
 
 import 'iApiService.dart';
 import 'package:http/http.dart' as http;
@@ -26,23 +26,23 @@ class ApiServiceMordre extends ApiService {
     }
 
   @override
-  Future<dynamic> listR1s(String sid) async {
+  Future<dynamic> listR1s() async {
     String api_uri = Config.endpoint_mordre;
     String method = "listR1s";
     String moduleName = "MOrdre";
     final response = await http.post(
-        Uri.parse(api_uri),
-        body: json.encode({
-          'method': method,
-          'moduleName': moduleName,
-          'sessionId': sid,
-          'payload': null
-        }),
-      );
-      var res =jsonDecode(response.body);
-      if(res['statusId'] != 1){
-        throw Exception(res['statusText']);
-      }
-      return res;
+      Uri.parse(api_uri),
+      body: json.encode({
+        'method': method,
+        'moduleName': moduleName,
+        'sessionId': Auth0Manager.sessionId,
+        'payload': null
+      }),
+    );
+    var res =jsonDecode(response.body);
+    if(res['statusId'] != 1){
+      throw Exception(res['statusText']);
+    }
+    return res;
   }
 }
