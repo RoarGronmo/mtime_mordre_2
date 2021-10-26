@@ -5,7 +5,7 @@ import 'home.dart';
 void main()  {
   WidgetsFlutterBinding.ensureInitialized();
   String? sid;
-  AuthManager.instance?.getSession().then((value) => sid = value);
+  sid = AuthManager.instance?.getSession();
   if(sid != null){
     runApp(const Mordre_Mtime());
   }else{
@@ -15,8 +15,3 @@ void main()  {
   }
   
 }
-
-
-
-
-

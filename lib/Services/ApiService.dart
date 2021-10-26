@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:mtime_mordre/auth/auth_manager.dart';
+import 'package:mtime_mordre/auth/iAuth_manager.dart';
 
 import 'iApiService.dart';
 import 'package:http/http.dart' as http;
@@ -35,7 +35,7 @@ class ApiServiceMordre extends ApiService {
       body: json.encode({
         'method': method,
         'moduleName': moduleName,
-        'sessionId': Auth0Manager.sessionId,
+        'sessionId': AuthManager.instance?.getSession().toString(),
         'payload': null
       }),
     );

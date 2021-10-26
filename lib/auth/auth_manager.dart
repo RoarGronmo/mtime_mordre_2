@@ -21,14 +21,15 @@ class Auth0Manager extends AuthManager {
   Future<String> Login() async {
     try {
       print("Starting login from Native client");
-      await oauth.login();
-      _accessToken = await oauth.getAccessToken();
-
-      ApiServiceMordre()
-          .loginSession(_accessToken!)
-          .then((sid) => {
-                sessionId = sid,
-              });
+      await oauth.login().then((value) async => {
+      _accessToken = await oauth.getAccessToken(),
+        ApiServiceMordre()
+            .loginSession(_accessToken!)
+            .then((sid) => {
+          print(sid),
+          sessionId = sid,
+        })
+      });
       print('Popup login successful. token: ${_accessToken}');
       return _accessToken.toString();
     } catch (e) {
@@ -38,7 +39,7 @@ class Auth0Manager extends AuthManager {
   }
 
   @override
-  Future<String?> getSession() async {
+  String? getSession() {
     return sessionId;
   }
 

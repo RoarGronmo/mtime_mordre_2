@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:msal_js/msal_js.dart';
+import 'package:mtime_mordre/Services/ApiService.dart';
 import 'iAuth_manager.dart';
 
 AuthManager getManager() => Auth0ManagerForWeb();
@@ -13,46 +14,46 @@ class Auth0ManagerForWeb extends AuthManager {
 
   static final PublicClientApplication pca = init();
 
-  static init(){
-    return  PublicClientApplication(
+  static init() {
+    return PublicClientApplication(
       Configuration()
         ..auth = (BrowserAuthOptions()
           ..clientId = clientId
-          ..authority = 'https://login.microsoftonline.com/294c7ede-2387-42ab-bbff-e5eb67ca3aee')
-
+          ..authority =
+              'https://login.microsoftonline.com/294c7ede-2387-42ab-bbff-e5eb67ca3aee')
         ..system = (BrowserSystemOptions()
           ..loggerOptions = (LoggerOptions()
-            ..loggerCallback = (LogLevel level, String message, bool containsPii){
+            ..loggerCallback =
+                (LogLevel level, String message, bool containsPii) {
               if (containsPii) {
                 return;
               }
               // MSAL log message
               print('MSAL: [$level] $message');
             }
-          // Log just about everything for the purpose of this demo
+            // Log just about everything for the purpose of this demo
             ..logLevel = LogLevel.verbose)),
     );
   }
 
   @override
   Future<String> Login() async {
-
-    /// Starts a popup login.
-    print("Starting login from Web-client");
     try {
-      // Handle redirect flow
       final AuthenticationResult? redirectResult =
-      await pca.handleRedirectFuture();
+          await pca.handleRedirectFuture();
 
       if (redirectResult != null) {
         // Just came back from a successful redirect flow
-        print('Redirect login successful. name: ${redirectResult.account!.name}');
-
+        print(
+            'Redirect login successful. name: ${redirectResult.account!.name}');
+        ApiServiceMordre()
+            .loginSession(redirectResult.accessToken)
+            .then((sid) => {
+                  sessionId = sid,
+                });
         // Set the account as active for convienence
         pca.setActiveAccount(redirectResult.account);
       } else {
-        // Normal page load (not from an auth redirect)
-        // Check if an account is logged in
         final List<AccountInfo> accounts = pca.getAllAccounts();
 
         if (accounts.isNotEmpty) {
@@ -67,16 +68,16 @@ class Auth0ManagerForWeb extends AuthManager {
     try {
       final response = await pca.loginPopup(PopupRequest()..scopes = scopes);
       _account = response.account;
-
+      ApiServiceMordre().loginSession(response.accessToken).then((sid) => {
+            sessionId = sid,
+          });
       print('Popup login successful. name: ${_account!.name}');
       return response.accessToken;
     } on AuthException catch (ex) {
       print('MSAL: ${ex.errorCode}:${ex.errorMessage}');
       return "Empty";
     }
-
   }
-
 
   @override
   Future<void> logout() async {
@@ -84,12 +85,12 @@ class Auth0ManagerForWeb extends AuthManager {
   }
 
   @override
-  Future<String?> getSession() async{
+  String? getSession()  {
     return sessionId;
   }
 
   @override
-  void onChange(){
+  void onChange() {
     notifyListeners();
   }
 
@@ -98,11 +99,9 @@ class Auth0ManagerForWeb extends AuthManager {
     return _account!.username;
   }
 
-
-  bool isLoggedIn()  {
+  bool isLoggedIn() {
     print("ISLOGGED IN");
     print(_account?.username);
     return _account?.username != null ? true : false;
   }
-
 }
