@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:msal_js/msal_js.dart';
-import 'package:mtime_mordre/Services/ApiService.dart';
+import 'package:mtime_mordre/Services/api_service.dart';
 import 'iAuth_manager.dart';
 
 AuthManager getManager() => Auth0ManagerForWeb();
@@ -37,7 +37,7 @@ class Auth0ManagerForWeb extends AuthManager {
   }
 
   @override
-  Future<String> Login() async {
+  Future<String> login() async {
     try {
       final AuthenticationResult? redirectResult =
           await pca.handleRedirectFuture();

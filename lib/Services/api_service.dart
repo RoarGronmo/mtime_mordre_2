@@ -1,22 +1,22 @@
 import 'dart:convert';
 import 'package:mtime_mordre/auth/iAuth_manager.dart';
-
-import 'iApiService.dart';
+import 'api_service_interface.dart';
 import 'package:http/http.dart' as http;
 import '../config.dart' as Config;
+
 class ApiServiceMordre extends ApiService {
 
   @override
-  Future<String> loginSession(oauth_token) async {
-    String api_uri = Config.endpoint_mordre;
+  Future<String> loginSession(oauthToken) async {
+    String apiUri = Config.endpoint_mordre;
     String method = "logInSession";
     String moduleName = "Authentication";
       final response = await http.post(
-        Uri.parse(api_uri),
+        Uri.parse(apiUri),
         body: json.encode({
           'method': method,
           'moduleName': moduleName,
-          'payload': {'oauth2AccessToken' : oauth_token}
+          'payload': {'oauth2AccessToken' : oauthToken}
         }),
       );
       if(jsonDecode(response.body)['statusId'] != 1){
@@ -27,11 +27,11 @@ class ApiServiceMordre extends ApiService {
 
   @override
   Future<dynamic> listR1s() async {
-    String api_uri = Config.endpoint_mordre;
+    String apiUri = Config.endpoint_mordre;
     String method = "listR1s";
     String moduleName = "MOrdre";
     final response = await http.post(
-      Uri.parse(api_uri),
+      Uri.parse(apiUri),
       body: json.encode({
         'method': method,
         'moduleName': moduleName,

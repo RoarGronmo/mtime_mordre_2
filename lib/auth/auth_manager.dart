@@ -1,6 +1,6 @@
 import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
-import 'package:mtime_mordre/Services/ApiService.dart';
+import 'package:mtime_mordre/Services/api_service.dart';
 import '../snackbar.dart';
 import 'iAuth_manager.dart';
 
@@ -18,7 +18,7 @@ class Auth0Manager extends AuthManager {
   final AadOAuth oauth = AadOAuth(config);
 
   @override
-  Future<String> Login() async {
+  Future<String> login() async {
     try {
       print("Starting login from Native client");
       await oauth.login().then((value) async => {

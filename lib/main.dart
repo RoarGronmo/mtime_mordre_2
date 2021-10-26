@@ -9,7 +9,7 @@ void main()  {
   if(sid != null){
     runApp(const Mordre_Mtime());
   }else{
-    AuthManager.instance?.Login().then((val) => {
+    AuthManager.instance?.login().then((val) => {
       runApp(const Mordre_Mtime()),
     });
   }
