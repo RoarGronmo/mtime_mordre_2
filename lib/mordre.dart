@@ -43,9 +43,8 @@ class _MordreState extends State<Mordre> {
               })
             })
         .onError((error, stackTrace) => {
-              Snackbar.buildErrorSnackbar(context,
-                  "Kunne ikke hente biler. Details: " + error.toString())
-            });
+              Snackbar.buildErrorSnackbar(context, "Kunne ikke hente biler. Details: " + error.toString())
+        });
   }
 
   Future<void> _refreshData() {

@@ -35,7 +35,7 @@ class Auth0ManagerForWeb extends AuthManager {
   }
 
   @override
-  Future<String> Login(BuildContext context) async {
+  Future<String> Login() async {
 
     /// Starts a popup login.
     print("Starting login from Web-client");
@@ -94,7 +94,7 @@ class Auth0ManagerForWeb extends AuthManager {
   }
 
   @override
-  Future<String> getActiveAccount() async {
+  String getActiveAccount() {
     return _account!.username;
   }
 

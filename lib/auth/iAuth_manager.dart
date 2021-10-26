@@ -12,8 +12,8 @@ abstract class AuthManager extends ChangeNotifier  {
     return _instance;
   }
 
-  Future<String> Login(BuildContext context);
-  Future<dynamic> getActiveAccount();
+  Future<String> Login();
+  String getActiveAccount();
   Future<void> logout();
   bool isLoggedIn();
   Future<String?> getSession();

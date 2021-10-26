@@ -11,7 +11,7 @@ class Mordre_Mtime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mordre/Mtime',
+      title: 'mWork',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const HomePage(title: 'Home'),
     );
@@ -32,27 +32,31 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return Mordre(
-      androidDrawer: _AndroidDrawer(),
+    return const Mordre(
+      androidDrawer: MainDrawer(),
     );
   }
 }
 
-class _AndroidDrawer extends StatelessWidget {
+class MainDrawer extends StatefulWidget{
+  const MainDrawer({Key? key}) : super(key: key);
 
   @override
+  State<StatefulWidget> createState() => _AndroidDrawer();
+
+}
+
+class _AndroidDrawer extends State<MainDrawer> {
+  final String? account = AuthManager.instance?.getActiveAccount().toString();
+  @override
   Widget build(BuildContext context) {
-    void login() async {
-      AuthManager.instance?.Login(context).then((value) => {
-        Snackbar.buildSuccessSnackbar(
-            context, "Success: " )
-      });
-    }
+
 
     void logout() async {
       await AuthManager.instance?.logout();
@@ -66,27 +70,15 @@ class _AndroidDrawer extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child:
-                  new FutureBuilder<String?>(
-                    future: AuthManager.instance?.getSession(), // a Future<String> or null
-                    builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-                            return new Text('Result: ${snapshot.data}');
-                      }
-                  )
+              Text("Du er logget inn som " + account!)
               ),
 
             ),
           ListTile(
             title: Text(
-              'Mordre/Mtime',
+              'mWork',
               style: Theme.of(context).textTheme.headline5,
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.login),
-            title:  Text('Login '),
-            onTap: () {
-              login();
-            },
           ),
           ListTile(
             leading: const Icon(Icons.logout),
