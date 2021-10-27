@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/home.dart';
+import 'package:mtime_mordre/Screens/home.dart';
 import 'package:mtime_mordre/models/Departments_collection.dart';
-import 'package:mtime_mordre/onboarding.dart';
+import 'package:mtime_mordre/Screens/onboarding.dart';
 import 'package:provider/provider.dart';
 
 import 'common/theme.dart';

@@ -1,10 +1,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/home.dart';
+import 'package:mtime_mordre/Screens/home.dart';
 import 'package:mtime_mordre/snackbar.dart';
-import 'Services/api_service.dart';
-import 'models/Bil.dart';
+import '../Services/api_service.dart';
+import '../models/Bil.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({Key? key, required this.title, }) : super(key: key);
@@ -16,6 +16,7 @@ class Onboarding extends StatefulWidget {
 
 class _Onboarding extends State<Onboarding> {
   late List<dynamic> departments = [];
+  TextEditingController editingController = TextEditingController();
   @override
   void initState() {
     _setData();
@@ -68,11 +69,24 @@ class _Onboarding extends State<Onboarding> {
             },
             child: const Text('Gå til mWork'),
           ),
+          TextField(
+            controller: editingController,
+            onChanged: (value) {
+              filterSearchResults(value);
+            },
+            decoration: InputDecoration(
+                labelText: "Search",
+                hintText: "Search",
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(25.0)))),
+          ),
           if (departments.isNotEmpty)
             Expanded(
               child: Card(
                 color: Colors.deepPurple,
                 child: ListView.builder(
+                    shrinkWrap: true,
                     itemCount: departments.length,
                     itemBuilder: (context, index) {
                       return ListTile(title: Text(departments[index].nm));
@@ -82,6 +96,25 @@ class _Onboarding extends State<Onboarding> {
         ]),
       ),
     );
+  }
+
+  void filterSearchResults(String query) {
+    List<MordreBil> searchList = <MordreBil>[];
+    if(query.isNotEmpty) {
+      departments.forEach((item) {
+        if(item.nm.contains(query)) {
+          print(item);
+          searchList.add(item);
+        }
+      });
+      setState(() {
+        print(searchList);
+        departments.clear();
+        departments.addAll(searchList);
+      });
+      return;
+
+    }
   }
 }
 
