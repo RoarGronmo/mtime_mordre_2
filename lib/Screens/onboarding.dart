@@ -89,7 +89,7 @@ class _Onboarding extends State<Onboarding> {
                     shrinkWrap: true,
                     itemCount: departments.length,
                     itemBuilder: (context, index) {
-                      return ListTile(title: Text(departments[index].nm));
+                      return ListTile(title: Text(departments[index].nm + " - " + departments[index].rNo.toString()));
                     }),
               ),
             ),
@@ -103,12 +103,12 @@ class _Onboarding extends State<Onboarding> {
     if(query.isNotEmpty) {
       departments.forEach((item) {
         if(item.nm.contains(query)) {
-          print(item);
+          searchList.add(item);
+        }else if(item.rNo.toString().contains(query)){
           searchList.add(item);
         }
       });
       setState(() {
-        print(searchList);
         departments.clear();
         departments.addAll(searchList);
       });
