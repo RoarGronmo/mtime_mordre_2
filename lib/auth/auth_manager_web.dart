@@ -46,7 +46,7 @@ class Auth0ManagerForWeb extends AuthManager {
         // Just came back from a successful redirect flow
         print(
             'Redirect login successful. name: ${redirectResult.account!.name}');
-        ApiServiceMordre()
+        await ApiServiceMordre()
             .loginSession(redirectResult.accessToken)
             .then((sid) => {
                   sessionId = sid,
@@ -68,9 +68,9 @@ class Auth0ManagerForWeb extends AuthManager {
     try {
       final response = await pca.loginPopup(PopupRequest()..scopes = scopes);
       _account = response.account;
-      ApiServiceMordre().loginSession(response.accessToken).then((sid) => {
+      await ApiServiceMordre().loginSession(response.accessToken).then((sid) => {
             sessionId = sid,
-          });
+      });
       print('Popup login successful. name: ${_account!.name}');
       return response.accessToken;
     } on AuthException catch (ex) {

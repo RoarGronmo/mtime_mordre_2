@@ -23,7 +23,7 @@ class Auth0Manager extends AuthManager {
       print("Starting login from Native client");
       await oauth.login().then((value) async => {
       _accessToken = await oauth.getAccessToken(),
-        ApiServiceMordre()
+        await ApiServiceMordre()
             .loginSession(_accessToken!)
             .then((sid) => {
           print(sid),

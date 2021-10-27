@@ -31,6 +31,9 @@ dependencies:
   aad_oauth: "^0.3.0"
   google_maps_flutter: ^2.0.11
   google_maps_flutter_web: ^0.3.2
+  provider: ^5.0.0
+  path_to_regexp: ^0.4.0
+  quiver: ^3.0.0
   flutter:
     sdk: flutter
 

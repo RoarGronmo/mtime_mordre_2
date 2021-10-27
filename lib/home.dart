@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mtime_mordre/onboarding.dart';
 import 'package:mtime_mordre/snackbar.dart';
 import 'auth/iAuth_manager.dart';
 import 'mordre.dart';
@@ -38,9 +39,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Mordre(
-      androidDrawer: MainDrawer(),
-    );
+      return const Mordre(
+        androidDrawer: MainDrawer(),
+      );
   }
 }
 
@@ -56,11 +57,10 @@ class _AndroidDrawer extends State<MainDrawer> {
   final String? account = AuthManager.instance?.getActiveAccount().toString();
   @override
   Widget build(BuildContext context) {
-
-
     void logout() async {
       await AuthManager.instance?.logout();
     }
+
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,48 +102,7 @@ class _AndroidDrawer extends State<MainDrawer> {
         ],
       ),
     );
-
   }
-
 }
 
-Widget _buildIosHomePage(BuildContext context) {
-  return CupertinoTabScaffold(
-    tabBar: CupertinoTabBar(
-      items: const [
-        BottomNavigationBarItem(
-          label: "test",
-          icon: Icon(Icons.access_time),
-        ),
-        BottomNavigationBarItem(
-          label: "titt",
-          icon: Icon(Icons.account_balance),
-        ),
-        BottomNavigationBarItem(
-          label: "titt",
-          icon: Icon(Icons.account_balance),
-        ),
-      ],
-    ),
-    tabBuilder: (context, index) {
-      switch (index) {
-        case 0:
-          return CupertinoTabView(
-            defaultTitle: "Test",
-          );
-        case 1:
-          return CupertinoTabView(
-            defaultTitle: "TESTsasd",
-          );
-        case 2:
-          return CupertinoTabView(
-            defaultTitle: "PROFILE",
-          );
-        default:
-          assert(false, 'Unexpected tab');
-          return const SizedBox.shrink();
-      }
-    },
-  );
-}
 

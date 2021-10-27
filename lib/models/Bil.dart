@@ -1,4 +1,4 @@
-class MordreBil {
+class MordreBil{
   late int rNo;
   late String nm;
   late int r5;
