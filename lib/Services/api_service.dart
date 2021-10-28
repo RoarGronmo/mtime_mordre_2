@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:mtime_mordre/auth/iAuth_manager.dart';
 import 'api_service_interface.dart';
 import 'package:http/http.dart' as http;
-import '../config.dart' as Config;
+import '../common/config.dart' as Config;
 
 class ApiServiceMordre extends ApiService {
 
