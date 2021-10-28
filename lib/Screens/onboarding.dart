@@ -30,7 +30,6 @@ class _Onboarding extends State<Onboarding> {
   }
 
   Widget _onboarding(BuildContext context) {
-    //return PickDepartment();
     return OnboardingStepper();
   }
 
