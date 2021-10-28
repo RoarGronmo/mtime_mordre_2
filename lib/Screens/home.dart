@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mtime_mordre/Screens/onboarding.dart';
-import 'package:mtime_mordre/snackbar.dart';
+import 'package:mtime_mordre/widgets/snackbar.dart';
 import '../auth/iAuth_manager.dart';
 import 'mordre.dart';
 

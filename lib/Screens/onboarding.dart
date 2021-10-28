@@ -2,7 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mtime_mordre/Screens/home.dart';
-import 'package:mtime_mordre/snackbar.dart';
+import 'package:mtime_mordre/widgets/pick_department.dart';
+import 'package:mtime_mordre/widgets/snackbar.dart';
+import 'package:mtime_mordre/widgets/stepper.dart';
 import '../Services/api_service.dart';
 import '../models/Bil.dart';
 
@@ -15,37 +17,12 @@ class Onboarding extends StatefulWidget {
 }
 
 class _Onboarding extends State<Onboarding> {
-  late List<dynamic> departments = [];
-  TextEditingController editingController = TextEditingController();
+
   @override
   void initState() {
-    _setData();
     super.initState();
   }
 
-  void _setData() {
-    fetchR1s();
-  }
-
-  fetchR1s() {
-    ApiServiceMordre()
-        .listR1s()
-        .then((value) => {
-      Snackbar.buildSuccessSnackbar(context, "Success!"),
-      setState(() {
-        var list = value['payload'];
-        var flattenedList = [];
-        list.forEach((k, v) => flattenedList.add(v));
-        departments = flattenedList
-            .map((model) => MordreBil.fromJson(model))
-            .toList();
-      })
-    })
-        .onError((error, stackTrace) => {
-      Snackbar.buildErrorSnackbar(context,
-          "Kunne ikke hente biler. Details: " + error.toString())
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,69 +30,11 @@ class _Onboarding extends State<Onboarding> {
   }
 
   Widget _onboarding(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Velkommen"),
-      ),
-      body: Center(
-        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomePage(title: 'mWork')),
-              );
-            },
-            child: const Text('Gå til mWork'),
-          ),
-          TextField(
-            controller: editingController,
-            onChanged: (value) {
-              filterSearchResults(value);
-            },
-            decoration: InputDecoration(
-                labelText: "Search",
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-          ),
-          if (departments.isNotEmpty)
-            Expanded(
-              child: Card(
-                color: Colors.deepPurple,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: departments.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(title: Text(departments[index].nm + " - " + departments[index].rNo.toString()));
-                    }),
-              ),
-            ),
-        ]),
-      ),
-    );
+    //return PickDepartment();
+    return OnboardingStepper();
   }
 
-  void filterSearchResults(String query) {
-    List<MordreBil> searchList = <MordreBil>[];
-    if(query.isNotEmpty) {
-      departments.forEach((item) {
-        if(item.nm.contains(query)) {
-          searchList.add(item);
-        }else if(item.rNo.toString().contains(query)){
-          searchList.add(item);
-        }
-      });
-      setState(() {
-        departments.clear();
-        departments.addAll(searchList);
-      });
-      return;
 
-    }
-  }
 }
 
 
