@@ -45,4 +45,26 @@ class ApiServiceMordre extends ApiService {
     }
     return res;
   }
+
+
+  @override
+  Future<dynamic> listR10s() async {
+    String apiUri = Config.endpoint_mordre;
+    String method = "listR10s";
+    String moduleName = "MOrdre";
+    final response = await http.post(
+      Uri.parse(apiUri),
+      body: json.encode({
+        'method': method,
+        'moduleName': moduleName,
+        'sessionId': AuthManager.instance?.getSession().toString(),
+        'payload': null
+      }),
+    );
+    var res =jsonDecode(response.body);
+    if(res['statusId'] != 1){
+      throw Exception(res['statusText']);
+    }
+    return res;
+  }
 }

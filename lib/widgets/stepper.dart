@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mtime_mordre/widgets/pick_department.dart';
+import 'package:mtime_mordre/widgets/pick_office.dart';
 
 class OnboardingStepper extends StatefulWidget {
   @override
@@ -8,7 +9,7 @@ class OnboardingStepper extends StatefulWidget {
 
 class _OnboardingStepperState extends State<OnboardingStepper> {
   int _currentStep = 0;
-  StepperType stepperType = StepperType.vertical;
+  StepperType stepperType = StepperType.horizontal;
 
 
   @override
@@ -32,6 +33,17 @@ class _OnboardingStepperState extends State<OnboardingStepper> {
                 onStepCancel: cancel,
                 steps: <Step>[
                   Step(
+                    title: new Text('Velg Kontor'),
+                    content: Column(
+                      children: <Widget>[
+                        PickOffice()
+                      ],
+                    ),
+                    isActive: _currentStep >= 0,
+                    state: _currentStep >= 0 ?
+                    StepState.complete : StepState.disabled,
+                  ),
+                  Step(
                     title: new Text('Velg bil'),
                     content: Column(
                       children: <Widget>[
@@ -39,7 +51,7 @@ class _OnboardingStepperState extends State<OnboardingStepper> {
                       ],
                     ),
                     isActive: _currentStep >= 0,
-                    state: _currentStep >= 0 ?
+                    state: _currentStep >= 1 ?
                     StepState.complete : StepState.disabled,
                   ),
                   Step(
@@ -55,7 +67,7 @@ class _OnboardingStepperState extends State<OnboardingStepper> {
                       ],
                     ),
                     isActive: _currentStep >= 0,
-                    state: _currentStep >= 1 ?
+                    state: _currentStep >= 2 ?
                     StepState.complete : StepState.disabled,
                   ),
                   Step(
@@ -68,7 +80,7 @@ class _OnboardingStepperState extends State<OnboardingStepper> {
                       ],
                     ),
                     isActive:_currentStep >= 0,
-                    state: _currentStep >= 2 ?
+                    state: _currentStep >= 3 ?
                     StepState.complete : StepState.disabled,
                   ),
                 ],
@@ -77,18 +89,11 @@ class _OnboardingStepperState extends State<OnboardingStepper> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.list),
-        onPressed: switchStepsType,
-      ),
+
 
     );
   }
-  switchStepsType() {
-    setState(() => stepperType == StepperType.vertical
-        ? stepperType = StepperType.horizontal
-        : stepperType = StepperType.vertical);
-  }
+
 
   tapped(int step){
     setState(() => _currentStep = step);

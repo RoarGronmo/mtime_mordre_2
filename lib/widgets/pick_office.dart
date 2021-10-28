@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mtime_mordre/Services/api_service.dart';
-import 'package:mtime_mordre/models/Bil.dart';
+import 'package:mtime_mordre/models/Office.dart';
 import 'package:mtime_mordre/widgets/snackbar.dart';
 
-class PickDepartment extends StatefulWidget {
+class PickOffice extends StatefulWidget {
   @override
-  _PickDepartmentState createState() => _PickDepartmentState();
+  _PickOfficeState createState() => _PickOfficeState();
 }
 
-class _PickDepartmentState extends State<PickDepartment> {
-  late List<dynamic> departments = [];
+class _PickOfficeState extends State<PickOffice> {
+  late List<dynamic> offices = [];
   TextEditingController editingController = TextEditingController();
 
   @override
@@ -19,27 +19,27 @@ class _PickDepartmentState extends State<PickDepartment> {
   }
 
   void _setData() {
-    fetchR1s();
+    fetchR10s();
   }
 
-  fetchR1s() {
+  fetchR10s() {
     ApiServiceMordre()
-        .listR1s()
+        .listR10s()
         .then((value) => {
-              Snackbar.buildSuccessSnackbar(context, "Success!"),
-              setState(() {
-                var list = value['payload'];
-                var flattenedList = [];
-                list.forEach((k, v) => flattenedList.add(v));
-                departments = flattenedList
-                    .map((model) => MordreBil.fromJson(model))
-                    .toList();
-              })
-            })
+      Snackbar.buildSuccessSnackbar(context, "Success!"),
+      setState(() {
+        var list = value['payload'];
+        var flattenedList = [];
+        list.forEach((k, v) => flattenedList.add(v));
+        offices = flattenedList
+            .map((model) => MordreOffice.fromJson(model))
+            .toList();
+      })
+    })
         .onError((error, stackTrace) => {
-              Snackbar.buildErrorSnackbar(context,
-                  "Kunne ikke hente biler. Details: " + error.toString())
-            });
+      Snackbar.buildErrorSnackbar(context,
+          "Kunne ikke hente kontor. Details: " + error.toString())
+    });
   }
 
   @override
@@ -61,20 +61,18 @@ class _PickDepartmentState extends State<PickDepartment> {
       ListView.builder(
           shrinkWrap: true,
           physics: ScrollPhysics(),
-          itemCount: departments.length,
+          itemCount: offices.length,
           itemBuilder: (context, index) {
             return ListTile(
-                title: Text(departments[index].nm +
-                    " - " +
-                    departments[index].rNo.toString()));
+                title: Text(offices[index].nm + ' - ' +  offices[index].rNo));
           }),
     ]);
   }
 
   void filterSearchResults(String query) {
-    List<MordreBil> searchList = <MordreBil>[];
+    List<MordreOffice> searchList = <MordreOffice>[];
     if (query.isNotEmpty) {
-      departments.forEach((item) {
+      offices.forEach((item) {
         if (item.nm.contains(query)) {
           searchList.add(item);
         } else if (item.rNo.toString().contains(query)) {
@@ -82,8 +80,8 @@ class _PickDepartmentState extends State<PickDepartment> {
         }
       });
       setState(() {
-        departments.clear();
-        departments.addAll(searchList);
+        offices.clear();
+        offices.addAll(searchList);
       });
       return;
     }

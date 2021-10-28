@@ -46,4 +46,10 @@ class ApiServiceFake extends ApiService {
       }
     };
   }
+
+  @override
+  Future listR10s() {
+    // TODO: implement listR10s
+    throw UnimplementedError();
+  }
 }
