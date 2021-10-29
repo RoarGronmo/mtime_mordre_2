@@ -26,7 +26,6 @@ class _OnboardingStepperState extends State<OnboardingStepper> {
             Expanded(
               child: Stepper(
                 type: stepperType,
-                physics: ScrollPhysics(),
                 currentStep: _currentStep,
                 onStepTapped: (step) => tapped(step),
                 onStepContinue:  continued,

@@ -45,7 +45,6 @@ class _PickOfficeState extends State<PickOffice> {
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      const SizedBox(height: 30),
       TextField(
         controller: editingController,
         onChanged: (value) {
@@ -58,14 +57,20 @@ class _PickOfficeState extends State<PickOffice> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.0)))),
       ),
+    SizedBox(
+    height: 350,
+    child:
       ListView.builder(
-          shrinkWrap: true,
-          physics: ScrollPhysics(),
-          itemCount: offices.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-                title: Text(offices[index].nm + ' - ' +  offices[index].rNo));
-          }),
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            itemCount: offices.length,
+            itemBuilder: (context, index) {
+              return Card(
+                  child:ListTile(
+                  title: Text(offices[index].nm + ' - ' +  offices[index].rNo))
+              );
+            }),
+      )
     ]);
   }
 

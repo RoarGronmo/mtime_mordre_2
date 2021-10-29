@@ -45,7 +45,6 @@ class _PickDepartmentState extends State<PickDepartment> {
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      const SizedBox(height: 30),
       TextField(
         controller: editingController,
         onChanged: (value) {
@@ -58,16 +57,22 @@ class _PickDepartmentState extends State<PickDepartment> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.0)))),
       ),
+    SizedBox(
+    height: 350,
+    child:
       ListView.builder(
           shrinkWrap: true,
           physics: ScrollPhysics(),
           itemCount: departments.length,
           itemBuilder: (context, index) {
-            return ListTile(
+            return Card(
+              child:ListTile(
                 title: Text(departments[index].nm +
                     " - " +
-                    departments[index].rNo.toString()));
+                    departments[index].rNo.toString()))
+            );
           }),
+      )
     ]);
   }
 
