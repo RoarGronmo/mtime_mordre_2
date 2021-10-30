@@ -1,7 +1,7 @@
 
 import 'package:msal_js/msal_js.dart';
-import 'package:mtime_mordre/Services/api_service.dart';
-import 'iAuth_manager.dart';
+import 'package:mtime_mordre/services/api_service.dart';
+import 'i_auth_manager.dart';
 
 AuthManager getManager() => Auth0ManagerForWeb();
 

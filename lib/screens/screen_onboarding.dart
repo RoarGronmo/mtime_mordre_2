@@ -1,12 +1,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/Screens/home.dart';
-import 'package:mtime_mordre/widgets/pick_department.dart';
-import 'package:mtime_mordre/widgets/snackbar.dart';
-import 'package:mtime_mordre/widgets/stepper.dart';
-import '../Services/api_service.dart';
-import '../models/Bil.dart';
+import 'package:mtime_mordre/Screens/screen_home.dart';
+import 'package:mtime_mordre/widgets/widget_pick_department.dart';
+import 'package:mtime_mordre/widgets/widget_snackbar.dart';
+import 'package:mtime_mordre/widgets/widget_stepper.dart';
+import '../services/api_service.dart';
+import '../models/model_car.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({Key? key, required this.title, }) : super(key: key);

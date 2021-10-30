@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/auth/iAuth_manager.dart';
-import 'package:mtime_mordre/_router.dart';
+import 'package:mtime_mordre/auth/i_auth_manager.dart';
+import 'package:mtime_mordre/router/router.dart';
 
 
 void main()  {

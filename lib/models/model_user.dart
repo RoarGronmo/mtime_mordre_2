@@ -1,7 +1,7 @@
-class User {
+class MWorkUser {
   late String sid;
 
-  User(String sid) {
+  MWorkUser(String sid) {
     this.sid = sid;
   }
 

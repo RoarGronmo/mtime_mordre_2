@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/Screens/home.dart';
-import 'package:mtime_mordre/models/Departments_collection.dart';
-import 'package:mtime_mordre/Screens/onboarding.dart';
+import 'package:mtime_mordre/Screens/screen_home.dart';
+import 'package:mtime_mordre/models/model_departments_collection.dart';
+import 'package:mtime_mordre/Screens/screen_onboarding.dart';
 import 'package:provider/provider.dart';
 
-import 'common/theme.dart';
-import 'models/Bil.dart';
+import '../common/common_theme.dart';
+import '../models/model_car.dart';
 
 class MWork extends StatelessWidget {
   const MWork({Key? key}) : super(key: key);

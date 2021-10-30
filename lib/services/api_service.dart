@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:mtime_mordre/auth/iAuth_manager.dart';
+import 'package:mtime_mordre/auth/i_auth_manager.dart';
 import 'api_service_interface.dart';
 import 'package:http/http.dart' as http;
-import '../common/config.dart' as Config;
+import '../common/common_config.dart' as Config;
 
 class ApiServiceMordre extends ApiService {
 
   @override
   Future<String> loginSession(oauthToken) async {
-    String apiUri = Config.endpoint_mordre;
+    String apiUri = Config.endpointMordre;
     String method = "logInSession";
     String moduleName = "Authentication";
       final response = await http.post(
@@ -27,7 +27,7 @@ class ApiServiceMordre extends ApiService {
 
   @override
   Future<dynamic> listR1s() async {
-    String apiUri = Config.endpoint_mordre;
+    String apiUri = Config.endpointMordre;
     String method = "listR1s";
     String moduleName = "MOrdre";
     final response = await http.post(
@@ -49,7 +49,7 @@ class ApiServiceMordre extends ApiService {
 
   @override
   Future<dynamic> listR10s() async {
-    String apiUri = Config.endpoint_mordre;
+    String apiUri = Config.endpointMordre;
     String method = "listR10s";
     String moduleName = "MOrdre";
     final response = await http.post(

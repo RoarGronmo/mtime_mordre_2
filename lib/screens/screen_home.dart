@@ -1,10 +1,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/Screens/onboarding.dart';
-import 'package:mtime_mordre/widgets/snackbar.dart';
-import '../auth/iAuth_manager.dart';
-import 'mordre.dart';
+import 'package:mtime_mordre/Screens/screen_onboarding.dart';
+import 'package:mtime_mordre/widgets/widget_snackbar.dart';
+import '../auth/i_auth_manager.dart';
+import 'screen_drawer.dart';
 
 class Mordre_Mtime extends StatelessWidget {
   const Mordre_Mtime({Key? key}) : super(key: key);

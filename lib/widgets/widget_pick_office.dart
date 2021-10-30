@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/Services/api_service.dart';
-import 'package:mtime_mordre/models/Office.dart';
-import 'package:mtime_mordre/widgets/snackbar.dart';
+import 'package:mtime_mordre/services/api_service.dart';
+import 'package:mtime_mordre/models/model_office.dart';
+import 'package:mtime_mordre/widgets/widget_snackbar.dart';
 
 class PickOffice extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _PickOfficeState extends State<PickOffice> {
         var flattenedList = [];
         list.forEach((k, v) => flattenedList.add(v));
         offices = flattenedList
-            .map((model) => MordreOffice.fromJson(model))
+            .map((model) => MWorkOffice.fromJson(model))
             .toList();
       })
     })
@@ -75,7 +75,7 @@ class _PickOfficeState extends State<PickOffice> {
   }
 
   void filterSearchResults(String query) {
-    List<MordreOffice> searchList = <MordreOffice>[];
+    List<MWorkOffice> searchList = <MWorkOffice>[];
     if (query.isNotEmpty) {
       offices.forEach((item) {
         if (item.nm.contains(query)) {

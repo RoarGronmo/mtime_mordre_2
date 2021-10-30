@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/Services/api_service.dart';
-import 'package:mtime_mordre/models/Bil.dart';
-import 'package:mtime_mordre/widgets/snackbar.dart';
+import 'package:mtime_mordre/services/api_service.dart';
+import 'package:mtime_mordre/models/model_car.dart';
+import 'package:mtime_mordre/widgets/widget_snackbar.dart';
 
 class PickDepartment extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _PickDepartmentState extends State<PickDepartment> {
                 var flattenedList = [];
                 list.forEach((k, v) => flattenedList.add(v));
                 departments = flattenedList
-                    .map((model) => MordreBil.fromJson(model))
+                    .map((model) => MWorkCar.fromJson(model))
                     .toList();
               })
             })
@@ -77,7 +77,7 @@ class _PickDepartmentState extends State<PickDepartment> {
   }
 
   void filterSearchResults(String query) {
-    List<MordreBil> searchList = <MordreBil>[];
+    List<MWorkCar> searchList = <MWorkCar>[];
     if (query.isNotEmpty) {
       departments.forEach((item) {
         if (item.nm.contains(query)) {

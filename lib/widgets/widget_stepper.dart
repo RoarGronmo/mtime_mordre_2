@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mtime_mordre/widgets/pick_department.dart';
-import 'package:mtime_mordre/widgets/pick_office.dart';
+import 'package:mtime_mordre/widgets/widget_pick_department.dart';
+import 'package:mtime_mordre/widgets/widget_pick_office.dart';
 
 class OnboardingStepper extends StatefulWidget {
   @override

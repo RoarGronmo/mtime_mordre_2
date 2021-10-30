@@ -1,8 +1,8 @@
 import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
-import 'package:mtime_mordre/Services/api_service.dart';
-import '../widgets/snackbar.dart';
-import 'iAuth_manager.dart';
+import 'package:mtime_mordre/services/api_service.dart';
+import '../widgets/widget_snackbar.dart';
+import 'i_auth_manager.dart';
 
 AuthManager getManager() => Auth0Manager();
 

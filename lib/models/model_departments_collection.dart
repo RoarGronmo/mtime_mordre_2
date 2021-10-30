@@ -1,16 +1,14 @@
 import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mtime_mordre/models/Bil.dart';
+import 'package:mtime_mordre/models/model_car.dart';
 
 class DepartmentsModel extends ChangeNotifier {
-  final List<MordreBil> _items = [];
+  final List<MWorkCar> _items = [];
 
-  UnmodifiableListView<MordreBil> get items => UnmodifiableListView(_items);
+  UnmodifiableListView<MWorkCar> get items => UnmodifiableListView(_items);
 
-
-
-  void add(MordreBil item) {
+  void add(MWorkCar item) {
     _items.add(item);
     notifyListeners();
   }
